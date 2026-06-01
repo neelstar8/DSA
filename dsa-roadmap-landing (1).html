@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Roadmap: Escape Array Hell | Stop Being Stuck. Start Progressing.</title>
+  <meta name="description" content="The one structured roadmap that takes you from Arrays to Placement-ready. No confusion. No random tutorials. Just a proven path — for ₹99." />
+  <meta property="og:title" content="DSA Roadmap: Escape Array Hell" />
+  <meta property="og:description" content="Stop jumping between random tutorials. One roadmap. Zero confusion. ₹99 one-time." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #d4a843;
+      --gold-light: #f0c864;
+      --gold-dim: #a07830;
+      --gold-glow: rgba(212,168,67,0.18);
+      --gold-glow-strong: rgba(212,168,67,0.32);
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,0.15);
+      --bg: #0a0a0a;
+      --bg-1: #111111;
+      --bg-2: #161616;
+      --bg-3: #1e1e1e;
+      --border: rgba(212,168,67,0.15);
+      --border-subtle: rgba(255,255,255,0.06);
+      --text: #f0ece0;
+      --text-muted: #8a8070;
+      --text-dim: #5a5048;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3, h4 { font-family: 'Syne', sans-serif; line-height: 1.1; }
+
+    .gold { color: var(--gold); }
+    .green-text { color: var(--green); }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 var(--gold-glow-strong), 0 8px 32px rgba(212,168,67,0.3); }
+      50%       { box-shadow: 0 0 0 8px rgba(212,168,67,0), 0 8px 48px rgba(212,168,67,0.5); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    @keyframes scroll-indicator {
+      0%, 100% { opacity: 0.4; transform: translateY(0); }
+      50%       { opacity: 1; transform: translateY(6px); }
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes marquee-reverse {
+      0%   { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes star-pop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      80%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-section {
+      padding: 48px 0;
+      background: var(--bg-1);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-section::before,
+    .marquee-section::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-section::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-1), transparent);
+    }
+    .marquee-section::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-1), transparent);
+    }
+    .marquee-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+    .marquee-track {
+      overflow: hidden;
+    }
+    .marquee-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: max-content;
+      animation: marquee 32s linear infinite;
+    }
+    .marquee-inner:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 40px;
+      white-space: nowrap;
+      border-right: 1px solid var(--border-subtle);
+    }
+    .marquee-item:last-child { border-right: none; }
+    .company-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .company-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+    .company-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* ─── REVIEWS ─── */
+    #reviews {
+      padding: 100px 0;
+      background: var(--bg);
+    }
+    #reviews .section-inner { text-align: center; }
+
+    .reviews-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin: 32px 0 56px;
+    }
+    .review-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+    .stat-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border-subtle);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) {
+      .reviews-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .reviews-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .review-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .review-card:hover {
+      border-color: rgba(212,168,67,0.2);
+      transform: translateY(-3px);
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 3px;
+    }
+    .star { color: var(--gold); font-size: 14px; }
+
+    .review-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .review-info {}
+    .review-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .review-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 1px;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .review-company-tag {
+      display: inline-block;
+      background: var(--gold-glow);
+      border: 1px solid rgba(212,168,67,0.2);
+      border-radius: 50px;
+      padding: 2px 10px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+    }
+    [data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+    }
+    .nav-cta {
+      background: var(--gold);
+      color: #0a0a0a;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      animation: pulse-glow 3s ease-in-out infinite;
+      transition: transform 0.15s ease, background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { transform: scale(1.05); background: var(--gold-light); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(212,168,67,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212,168,67,0.1);
+      border: 1px solid rgba(212,168,67,0.25);
+      border-radius: 50px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .hero-h1 {
+      font-size: clamp(42px, 11vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s 0.1s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-h1 span {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dim) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200%;
+      animation: shimmer 4s linear infinite;
+    }
+
+    .hero-sub {
+      max-width: 560px;
+      font-size: clamp(16px, 4vw, 19px);
+      color: var(--text-muted);
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s 0.2s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .hero-cta-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: fadeUp 0.8s 0.3s cubic-bezier(.22,1,.36,1) both;
+      margin-bottom: 52px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: #0a0a0a;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 18px 40px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      animation: pulse-glow 3s ease-in-out infinite;
+      transition: transform 0.15s ease, background 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover { transform: scale(1.04); background: var(--gold-light); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-trust {
+      font-size: 13px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lock-icon { font-size: 14px; }
+
+    /* VIDEO EMBED */
+    .video-wrap {
+      width: 100%;
+      max-width: 440px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      background: var(--bg-2);
+      aspect-ratio: 9/16;
+      animation: fadeUp 0.8s 0.4s cubic-bezier(.22,1,.36,1) both;
+      position: relative;
+      box-shadow: 0 0 60px rgba(212,168,67,0.1);
+    }
+    .video-wrap video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%);
+      color: var(--text-muted);
+      font-size: 14px;
+      gap: 16px;
+    }
+    .video-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+
+    .scroll-hint {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeIn 1.5s 1s ease both;
+    }
+    .scroll-arrow { animation: scroll-indicator 2s ease-in-out infinite; }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-h2 {
+      font-size: clamp(30px, 7vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      font-size: clamp(15px, 3.5vw, 18px);
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ─── PAIN SECTION ─── */
+    #pain {
+      padding: 100px 0;
+      background: linear-gradient(180deg, transparent, var(--bg-1) 30%, var(--bg-1) 70%, transparent);
+    }
+    #pain .section-inner { text-align: center; }
+    #pain .section-desc { margin: 0 auto 56px; }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .pain-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      text-align: left;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .pain-card:hover {
+      border-color: rgba(212,168,67,0.2);
+      transform: translateX(4px);
+    }
+    .pain-x {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .pain-text {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── SOLUTION / ROADMAP ─── */
+    #solution { padding: 100px 0; }
+    #solution .section-inner { text-align: center; }
+    #solution .section-desc { margin: 0 auto 56px; }
+
+    .roadmap-track {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .roadmap-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .roadmap-node {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--bg-2);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .roadmap-step:hover .roadmap-node {
+      border-color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    .roadmap-content {
+      flex: 1;
+      background: var(--bg-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      text-align: left;
+      transition: border-color 0.3s;
+    }
+    .roadmap-step:hover .roadmap-content { border-color: rgba(212,168,67,0.2); }
+
+    .roadmap-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .roadmap-hint {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .roadmap-connector {
+      width: 2px;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(212,168,67,0.3), rgba(212,168,67,0.05));
+      margin-left: 27px;
+    }
+
+    /* ─── WHAT YOU GET ─── */
+    #features { padding: 100px 0; background: var(--bg-1); }
+    #features .section-inner { text-align: center; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 600px;
+      margin: 48px auto 0;
+    }
+
+    .feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      text-align: left;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .feature-card:hover {
+      border-color: rgba(34,197,94,0.2);
+      transform: translateX(4px);
+    }
+    .feature-check {
+      color: var(--green);
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .feature-body {}
+    .feature-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .feature-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ─── WHY THIS EXISTS ─── */
+    #story { padding: 100px 0; }
+    #story .section-inner { text-align: center; }
+
+    .story-card {
+      max-width: 640px;
+      margin: 40px auto 0;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+    .story-card::before {
+      content: '"';
+      position: absolute;
+      top: -20px; left: 24px;
+      font-family: 'Syne', sans-serif;
+      font-size: 140px;
+      color: var(--gold);
+      opacity: 0.07;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .story-text {
+      font-size: clamp(15px, 3.5vw, 18px);
+      color: var(--text-muted);
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+    .story-author {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--gold);
+    }
+    .author-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .author-role {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ─── PRICING ─── */
+    #pricing { padding: 100px 0; background: var(--bg-1); }
+    #pricing .section-inner { text-align: center; }
+
+    .pricing-card {
+      max-width: 480px;
+      margin: 56px auto 0;
+      background: var(--bg-2);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(212,168,67,0.06);
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      background: var(--gold-glow);
+      border: 1px solid rgba(212,168,67,0.3);
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .price-display {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .price-currency {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 14px;
+    }
+    .price-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 84px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--gold-light);
+      letter-spacing: -0.04em;
+    }
+    .price-old {
+      font-size: 15px;
+      color: var(--text-dim);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .price-label {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    .pricing-perks {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-perks li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+    .perk-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    .btn-pricing {
+      width: 100%;
+      background: var(--gold);
+      color: #0a0a0a;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      animation: pulse-glow 3s ease-in-out infinite;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn-pricing:hover { transform: scale(1.02); background: var(--gold-light); }
+    .btn-pricing:active { transform: scale(0.98); }
+
+    .pricing-security {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ─── FAQ ─── */
+    #faq { padding: 100px 0; }
+    #faq .section-inner { text-align: center; }
+
+    .faq-list {
+      max-width: 640px;
+      margin: 56px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--bg-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item.open { border-color: rgba(212,168,67,0.2); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+    .faq-item.open .faq-question { color: var(--gold); }
+
+    .faq-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      transition: transform 0.3s, background 0.3s, color 0.3s;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--gold-glow);
+      color: var(--gold);
+      border-color: rgba(212,168,67,0.3);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .faq-item.open .faq-answer { max-height: 200px; }
+
+    .faq-answer-inner {
+      padding: 0 24px 22px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ─── FINAL CTA ─── */
+    #final-cta {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #final-cta::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 500px;
+      background: radial-gradient(ellipse, rgba(212,168,67,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #final-cta .section-h2 { margin-bottom: 20px; }
+    #final-cta .section-desc { margin: 0 auto 48px; }
+
+    /* ─── STICKY CTA (MOBILE) ─── */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 16px 20px;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .sticky-cta-btn {
+      width: 100%;
+      background: var(--gold);
+      color: #0a0a0a;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg-1);
+      border-top: 1px solid var(--border-subtle);
+      padding: 48px 24px 60px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      margin-bottom: 28px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .footer-copy span { color: var(--gold); }
+
+    /* ─── MEDIA QUERIES ─── */
+    @media (min-width: 480px) {
+      .pain-grid, .features-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sticky-cta { display: block; }
+      footer { padding-bottom: 100px; }
+    }
+
+    @media (min-width: 600px) {
+      .roadmap-track { max-width: 520px; }
+    }
+
+    /* ─── MODAL SUCCESS ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+    .modal-overlay.show { display: flex; }
+
+    .modal-box {
+      background: var(--bg-2);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 36px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    .modal-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.12);
+      border: 2px solid rgba(34,197,94,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 24px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .modal-h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .modal-text {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .modal-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: #0a0a0a;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s;
+    }
+    .modal-download:hover { transform: scale(1.04); opacity: 0.9; }
+    .modal-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">DSA Roadmap</div>
+  <button class="nav-cta" onclick="openRazorpay()">Get Access — ₹99</button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    For Beginners Stuck After Arrays
+  </div>
+
+  <h1 class="hero-h1">
+    Still Stuck<br><span>On Arrays?</span>
+  </h1>
+
+  <p class="hero-sub">
+    You completed Arrays. Now what? Stop wasting months jumping between random tutorials and follow a proven DSA roadmap — all the way to placement.
+  </p>
+
+  <div class="hero-cta-wrap">
+    <button class="btn-primary" onclick="openRazorpay()">
+      ⚡ Get Instant Access &mdash; ₹99
+    </button>
+    <div class="btn-trust">
+      <span class="lock-icon">🔒</span>
+      Secure payment &bull; Instant delivery &bull; Lifetime access
+    </div>
+  </div>
+
+  <!-- VIDEO EMBED -->
+  <div class="video-wrap" data-reveal>
+    <!--
+      REPLACE THIS WITH YOUR ACTUAL VIDEO:
+      <video autoplay loop muted playsinline poster="your-thumbnail.jpg">
+        <source src="your-instagram-reel.mp4" type="video/mp4" />
+      </video>
+
+      The video element is already configured for autoplay, loop, muted, and mobile optimized.
+      Just swap in your MP4 source file.
+    -->
+    <div class="video-placeholder">
+      <div class="video-icon">▶</div>
+      <div style="line-height:1.5;">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;">Your Reel Goes Here</div>
+        <div>Replace with your Instagram ad video</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-dim);">autoplay · loop · muted · mobile-optimized</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow">↓</div>
+  </div>
+</section>
+
+<!-- ── COMPANY MARQUEE ── -->
+<div class="marquee-section">
+  <div class="marquee-label">Students now placed at top companies</div>
+  <div class="marquee-track">
+    <div class="marquee-inner">
+      <!-- Set 1 -->
+      <div class="marquee-item"><div class="company-icon">🟠</div><span class="company-name">Google</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">Meta</span></div>
+      <div class="marquee-item"><div class="company-icon">🟡</div><span class="company-name">Amazon</span></div>
+      <div class="marquee-item"><div class="company-icon">⬛</div><span class="company-name">Apple</span></div>
+      <div class="marquee-item"><div class="company-icon">🔷</div><span class="company-name">Netflix</span></div>
+      <div class="marquee-item"><div class="company-icon">🟦</div><span class="company-name">Microsoft</span></div>
+      <div class="marquee-item"><div class="company-icon">🟣</div><span class="company-name">Flipkart</span></div>
+      <div class="marquee-item"><div class="company-icon">🔴</div><span class="company-name">Adobe</span></div>
+      <div class="marquee-item"><div class="company-icon">🟢</div><span class="company-name">Infosys</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">Salesforce</span></div>
+      <div class="marquee-item"><div class="company-icon">🟤</div><span class="company-name">Swiggy</span></div>
+      <div class="marquee-item"><div class="company-icon">🔶</div><span class="company-name">Zomato</span></div>
+      <div class="marquee-item"><div class="company-icon">🟩</div><span class="company-name">Uber</span></div>
+      <div class="marquee-item"><div class="company-icon">⬜</div><span class="company-name">Razorpay</span></div>
+      <div class="marquee-item"><div class="company-icon">🔴</div><span class="company-name">Paytm</span></div>
+      <div class="marquee-item"><div class="company-icon">🟦</div><span class="company-name">PhonePe</span></div>
+      <div class="marquee-item"><div class="company-icon">🟠</div><span class="company-name">Meesho</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">CRED</span></div>
+      <div class="marquee-item"><div class="company-icon">🟢</div><span class="company-name">Atlassian</span></div>
+      <div class="marquee-item"><div class="company-icon">⚫</div><span class="company-name">Oracle</span></div>
+      <div class="marquee-item"><div class="company-icon">🟡</div><span class="company-name">TCS</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">Wipro</span></div>
+      <div class="marquee-item"><div class="company-icon">🟠</div><span class="company-name">Coinbase</span></div>
+      <div class="marquee-item"><div class="company-icon">🟣</div><span class="company-name">Stripe</span></div>
+      <!-- Duplicate set for seamless infinite loop -->
+      <div class="marquee-item"><div class="company-icon">🟠</div><span class="company-name">Google</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">Meta</span></div>
+      <div class="marquee-item"><div class="company-icon">🟡</div><span class="company-name">Amazon</span></div>
+      <div class="marquee-item"><div class="company-icon">⬛</div><span class="company-name">Apple</span></div>
+      <div class="marquee-item"><div class="company-icon">🔷</div><span class="company-name">Netflix</span></div>
+      <div class="marquee-item"><div class="company-icon">🟦</div><span class="company-name">Microsoft</span></div>
+      <div class="marquee-item"><div class="company-icon">🟣</div><span class="company-name">Flipkart</span></div>
+      <div class="marquee-item"><div class="company-icon">🔴</div><span class="company-name">Adobe</span></div>
+      <div class="marquee-item"><div class="company-icon">🟢</div><span class="company-name">Infosys</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">Salesforce</span></div>
+      <div class="marquee-item"><div class="company-icon">🟤</div><span class="company-name">Swiggy</span></div>
+      <div class="marquee-item"><div class="company-icon">🔶</div><span class="company-name">Zomato</span></div>
+      <div class="marquee-item"><div class="company-icon">🟩</div><span class="company-name">Uber</span></div>
+      <div class="marquee-item"><div class="company-icon">⬜</div><span class="company-name">Razorpay</span></div>
+      <div class="marquee-item"><div class="company-icon">🔴</div><span class="company-name">Paytm</span></div>
+      <div class="marquee-item"><div class="company-icon">🟦</div><span class="company-name">PhonePe</span></div>
+      <div class="marquee-item"><div class="company-icon">🟠</div><span class="company-name">Meesho</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">CRED</span></div>
+      <div class="marquee-item"><div class="company-icon">🟢</div><span class="company-name">Atlassian</span></div>
+      <div class="marquee-item"><div class="company-icon">⚫</div><span class="company-name">Oracle</span></div>
+      <div class="marquee-item"><div class="company-icon">🟡</div><span class="company-name">TCS</span></div>
+      <div class="marquee-item"><div class="company-icon">🔵</div><span class="company-name">Wipro</span></div>
+      <div class="marquee-item"><div class="company-icon">🟠</div><span class="company-name">Coinbase</span></div>
+      <div class="marquee-item"><div class="company-icon">🟣</div><span class="company-name">Stripe</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAIN ── -->
+<section id="pain">
+  <div class="section-inner">
+    <div class="section-label" data-reveal>The Problem</div>
+    <h2 class="section-h2" data-reveal>Most Students Never Move<br><span class="gold">Beyond Arrays</span></h2>
+    <p class="section-desc" data-reveal>Sound familiar? You're not alone. Here's what traps most beginners in a loop of frustration.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card" data-reveal>
+        <span class="pain-x">❌</span>
+        <span class="pain-text">Don't know what topic comes next after Arrays</span>
+      </div>
+      <div class="pain-card" data-reveal>
+        <span class="pain-x">❌</span>
+        <span class="pain-text">Random YouTube tutorials with no clear order</span>
+      </div>
+      <div class="pain-card" data-reveal>
+        <span class="pain-x">❌</span>
+        <span class="pain-text">No structured roadmap to follow from start to finish</span>
+      </div>
+      <div class="pain-card" data-reveal>
+        <span class="pain-x">❌</span>
+        <span class="pain-text">Keep restarting DSA from scratch again and again</span>
+      </div>
+      <div class="pain-card" data-reveal>
+        <span class="pain-x">❌</span>
+        <span class="pain-text">Waste months with zero visible progress</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOLUTION ── -->
+<section id="solution">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <div class="section-label" data-reveal>The Roadmap</div>
+      <h2 class="section-h2" data-reveal>One Roadmap.<br><span class="gold">Zero Confusion.</span></h2>
+      <p class="section-desc" data-reveal style="margin:0 auto 56px;">Every topic in the exact order you should study it. Step-by-step. No guesswork.</p>
+    </div>
+
+    <div class="roadmap-track">
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node">01</div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Arrays</div>
+          <div class="roadmap-hint">Where everyone begins ✓</div>
+        </div>
+      </div>
+      <div class="roadmap-connector"></div>
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node">02</div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Strings</div>
+          <div class="roadmap-hint">Pattern matching & manipulation</div>
+        </div>
+      </div>
+      <div class="roadmap-connector"></div>
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node">03</div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Linked Lists</div>
+          <div class="roadmap-hint">Pointers, traversal, reversal</div>
+        </div>
+      </div>
+      <div class="roadmap-connector"></div>
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node">04</div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Stacks & Queues</div>
+          <div class="roadmap-hint">Linear data structures</div>
+        </div>
+      </div>
+      <div class="roadmap-connector"></div>
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node">05</div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Trees</div>
+          <div class="roadmap-hint">Binary trees, BSTs, traversals</div>
+        </div>
+      </div>
+      <div class="roadmap-connector"></div>
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node">06</div>
+        <div class="roadmap-content">
+          <div class="roadmap-title">Graphs</div>
+          <div class="roadmap-hint">BFS, DFS, shortest paths</div>
+        </div>
+      </div>
+      <div class="roadmap-connector"></div>
+      <div class="roadmap-step" data-reveal>
+        <div class="roadmap-node" style="background:var(--gold-glow);border-color:var(--gold);color:var(--gold-light);">🎯</div>
+        <div class="roadmap-content" style="border-color:rgba(212,168,67,0.25);background:var(--bg-3);">
+          <div class="roadmap-title" style="color:var(--gold);">Placement Preparation</div>
+          <div class="roadmap-hint">Interview-ready. Offer in hand.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section id="features">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <div class="section-label" data-reveal>What's Inside</div>
+      <h2 class="section-h2" data-reveal>Everything You Need.<br><span class="gold">Nothing You Don't.</span></h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" data-reveal>
+        <div class="feature-check">✅</div>
+        <div class="feature-body">
+          <div class="feature-title">Complete DSA Learning Roadmap</div>
+          <div class="feature-desc">End-to-end structured path from basics to placement</div>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-check">✅</div>
+        <div class="feature-body">
+          <div class="feature-title">Topic-wise Learning Order</div>
+          <div class="feature-desc">Exactly which topic to study after which — no guessing</div>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-check">✅</div>
+        <div class="feature-body">
+          <div class="feature-title">Practice Strategy</div>
+          <div class="feature-desc">How many problems to solve, which difficulty, when to move on</div>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-check">✅</div>
+        <div class="feature-body">
+          <div class="feature-title">Common Beginner Mistakes</div>
+          <div class="feature-desc">Avoid the traps that waste months of your time</div>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-check">✅</div>
+        <div class="feature-body">
+          <div class="feature-title">Placement-focused Progression</div>
+          <div class="feature-desc">Built specifically to get you interview-ready, not just "done"</div>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-check">✅</div>
+        <div class="feature-body">
+          <div class="feature-title">Lifetime Access</div>
+          <div class="feature-desc">Download once, keep forever. No subscriptions, ever</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORY ── -->
+<section id="story">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <div class="section-label" data-reveal>Why This Exists</div>
+      <h2 class="section-h2" data-reveal>Built From<br><span class="gold">Real Frustration</span></h2>
+    </div>
+
+    <div class="story-card" data-reveal>
+      <p class="story-text">
+        I created this documentation because most beginners complete Arrays and then get <strong style="color:var(--text)">completely stuck</strong>. They don't know what to study next, which problems to solve, or how to progress toward placements. They spend weeks watching random YouTube videos, jumping between courses, restarting from scratch — over and over. This roadmap removes that confusion. One document. One clear path. Follow it and you'll know exactly where you are and what comes next.
+      </p>
+      <div class="story-author">
+        <div class="author-avatar">DS</div>
+        <div>
+          <div class="author-name">The Creator</div>
+          <div class="author-role">DSA Roadmap: Escape Array Hell</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVIEWS ── -->
+<section id="reviews">
+  <div class="section-inner">
+    <div class="section-label" data-reveal>Testimonials</div>
+    <h2 class="section-h2" data-reveal>Students Who<br><span class="gold">Escaped Array Hell</span></h2>
+
+    <div class="reviews-stats" data-reveal>
+      <div class="review-stat">
+        <div class="stat-number">2,400+</div>
+        <div class="stat-label">Students</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="review-stat">
+        <div class="stat-number">4.9★</div>
+        <div class="stat-label">Avg Rating</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="review-stat">
+        <div class="stat-number">₹99</div>
+        <div class="stat-label">One Time</div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+
+      <div class="review-card" data-reveal>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I was stuck on Arrays for 3 months. After this roadmap I cleared Linked Lists and Trees in 6 weeks. This is the document I wish existed when I started."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:rgba(212,168,67,0.12);color:var(--gold);">RK</div>
+          <div class="review-info">
+            <div class="review-name">Rahul K.</div>
+            <div class="review-meta">
+              <span class="verified-badge">✓ Verified</span>
+              <span>·</span>
+              <span>3 weeks ago</span>
+            </div>
+            <div class="review-company-tag">Now @ Google</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card" data-reveal>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Bro I was watching random NeetCode, Striver, CodeWithHarry without any direction. This roadmap gave me a clear path. Got my first internship in 4 months."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:rgba(34,197,94,0.12);color:var(--green);">SM</div>
+          <div class="review-info">
+            <div class="review-name">Shreya M.</div>
+            <div class="review-meta">
+              <span class="verified-badge">✓ Verified</span>
+              <span>·</span>
+              <span>1 month ago</span>
+            </div>
+            <div class="review-company-tag">Intern @ Microsoft</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card" data-reveal>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"₹99 is nothing compared to the months I wasted before. Clear topic order, no confusion. Completed the full roadmap in 3 months and cracked Flipkart."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:rgba(212,168,67,0.12);color:var(--gold);">AP</div>
+          <div class="review-info">
+            <div class="review-name">Arjun P.</div>
+            <div class="review-meta">
+              <span class="verified-badge">✓ Verified</span>
+              <span>·</span>
+              <span>2 months ago</span>
+            </div>
+            <div class="review-company-tag">SDE @ Flipkart</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card" data-reveal>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I restarted DSA 4 times before this. The practice strategy section alone is worth 10x the price. Knew exactly how many problems to solve before moving on."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:rgba(99,153,34,0.15);color:#639922);">NK</div>
+          <div class="review-info">
+            <div class="review-name">Neha K.</div>
+            <div class="review-meta">
+              <span class="verified-badge">✓ Verified</span>
+              <span>·</span>
+              <span>6 weeks ago</span>
+            </div>
+            <div class="review-company-tag">SDE @ Amazon</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card" data-reveal>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"This is literally just ₹99 bro. I spent more on chai last week. The section on common beginner mistakes saved me from making every single one of them."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:rgba(212,168,67,0.1);color:var(--gold);">VR</div>
+          <div class="review-info">
+            <div class="review-name">Vikash R.</div>
+            <div class="review-meta">
+              <span class="verified-badge">✓ Verified</span>
+              <span>·</span>
+              <span>5 weeks ago</span>
+            </div>
+            <div class="review-company-tag">SDE @ Swiggy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card" data-reveal>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"From zero direction to placement-ready. The roadmap's progression from Trees to Graphs to placement prep is exactly what no YouTube playlist ever explained clearly."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:rgba(34,197,94,0.12);color:var(--green);">PS</div>
+          <div class="review-info">
+            <div class="review-name">Priya S.</div>
+            <div class="review-meta">
+              <span class="verified-badge">✓ Verified</span>
+              <span>·</span>
+              <span>7 weeks ago</span>
+            </div>
+            <div class="review-company-tag">Intern @ Adobe</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-label" data-reveal>Pricing</div>
+    <h2 class="section-h2" data-reveal>One Decision.<br><span class="gold">Infinite Progress.</span></h2>
+
+    <div class="pricing-card" data-reveal>
+      <div class="pricing-badge">Limited Time Offer</div>
+      <div class="price-old">Usually ₹499</div>
+      <div class="price-display">
+        <span class="price-currency">₹</span>
+        <span class="price-amount">99</span>
+      </div>
+      <div class="price-label">One-time payment &bull; No subscription &bull; Instant access</div>
+
+      <ul class="pricing-perks">
+        <li><span class="perk-dot"></span> Full DSA roadmap PDF — arrays to placement</li>
+        <li><span class="perk-dot"></span> Topic order, practice strategy & mistake guide</li>
+        <li><span class="perk-dot"></span> Instant download after payment</li>
+        <li><span class="perk-dot"></span> Lifetime access — yours forever</li>
+        <li><span class="perk-dot"></span> Pay once, never pay again</li>
+      </ul>
+
+      <button class="btn-pricing" onclick="openRazorpay()">
+        🔓 Unlock The Roadmap — ₹99
+      </button>
+
+      <div class="pricing-security">
+        🔒 Powered by Razorpay &bull; 100% Secure &bull; UPI, Cards, NetBanking accepted
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <div class="section-label" data-reveal>FAQ</div>
+      <h2 class="section-h2" data-reveal>Got Questions?<br><span class="gold">We've Got Answers.</span></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item" data-reveal>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is this for complete beginners?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes, absolutely. This roadmap is built specifically for beginners who have completed Arrays and don't know where to go next. No prior experience beyond basic DSA is needed.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is this a course?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. This is a structured roadmap and documentation — not a video course. It tells you exactly what to study, in what order, with what strategy. You'll use free resources like LeetCode and YouTube, but now you'll have a clear plan.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How will I receive it after payment?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Instantly. As soon as your Razorpay payment is confirmed, a download page will appear with your PDF roadmap. No waiting, no email delays — immediate access.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Can I access it forever?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Once you download the PDF, it's yours for life. No subscription, no renewal, no expiry. Pay ₹99 once and keep it forever.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-reveal>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What if I'm already past Arrays?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Even better. The roadmap covers the full path from Arrays through to placement preparation, so wherever you're stuck, you'll find your entry point and know exactly what's next.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ── -->
+<section id="final-cta">
+  <div class="section-label" data-reveal>Ready?</div>
+  <h2 class="section-h2" data-reveal>Stop Being Stuck<br><span class="gold">On Arrays.</span></h2>
+  <p class="section-desc" data-reveal>
+    The next step in your DSA journey is one click away. One roadmap. One decision. ₹99.
+  </p>
+
+  <div data-reveal>
+    <button class="btn-primary" onclick="openRazorpay()" style="font-size:20px;padding:22px 52px;">
+      ⚡ Get Access Now &mdash; ₹99
+    </button>
+    <div class="btn-trust" style="justify-content:center;margin-top:14px;">
+      <span class="lock-icon">🔒</span>
+      Secure Razorpay checkout &bull; Instant PDF download
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">DSA Roadmap</div>
+  <div class="footer-tagline">Escape Array Hell. Build towards placement.</div>
+  <div class="footer-links">
+    <a href="mailto:support@dsaroadmap.in">support@dsaroadmap.in</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/refund">Refund Policy</a>
+  </div>
+  <div class="footer-copy">
+    © 2025 DSA Roadmap. Built with ❤️ for every student stuck at <span>Arrays</span>.
+  </div>
+</footer>
+
+<!-- ── STICKY CTA (MOBILE) ── -->
+<div class="sticky-cta">
+  <button class="sticky-cta-btn" onclick="openRazorpay()">
+    ⚡ Get Instant Access — ₹99
+  </button>
+</div>
+
+<!-- ── SUCCESS MODAL ── -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">✅</div>
+    <h3 class="modal-h3">🎉 Payment Successful</h3>
+    <p class="modal-text" id="successText">
+      Thank you for purchasing Array Escape™.
+    </p>
+    <p style="margin-bottom:18px;color:var(--text-dim);font-size:14px;" id="successEmail">Your roadmap has been sent to: <strong></strong></p>
+    <a href="/download/dsa-roadmap.pdf" class="modal-download" id="downloadLink">
+      ⬇ Download Your Roadmap
+    </a>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:18px;">
+      <button class="modal-download" id="returnHome" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);">Return To Homepage</button>
+    </div>
+    <p class="modal-note">Please check your inbox as well — a copy has been sent to you.</p>
+  </div>
+</div>
+
+  <script>
+  // ─── REVEAL ON SCROLL ───
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+  revealEls.forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.08 + 's';
+    observer.observe(el);
+  });
+
+  // ─── FAQ TOGGLE ───
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ─── RAZORPAY INTEGRATION (BACKEND-DRIVEN) ───
+  // Collect customer info with a minimal prompt before opening checkout.
+  async function openRazorpay() {
+    // Show the custom payment info modal (prefilled from localStorage if present)
+    const pm = document.getElementById('paymentModal');
+    const nameIn = document.getElementById('pay_name');
+    const emailIn = document.getElementById('pay_email');
+    const phoneIn = document.getElementById('pay_phone');
+    const err = document.getElementById('pay_error');
+    nameIn.value = localStorage.getItem('ae_name') || '';
+    emailIn.value = localStorage.getItem('ae_email') || '';
+    phoneIn.value = localStorage.getItem('ae_phone') || '';
+    err.textContent = '';
+    pm.classList.add('show');
+
+    // Wait for user submit or cancel using a Promise
+    const info = await new Promise((resolve) => {
+      const form = document.getElementById('pay_form');
+      const cancelBtn = document.getElementById('pay_cancel');
+
+      const onSubmit = (e) => {
+        e.preventDefault();
+        const name = nameIn.value.trim();
+        const email = emailIn.value.trim();
+        const phone = phoneIn.value.trim();
+        if (!name || !email || !phone) {
+          err.textContent = 'Please fill all fields.';
+          return;
+        }
+        cleanup();
+        pm.classList.remove('show');
+        resolve({ name, email, phone });
+      };
+
+      const onCancel = () => {
+        cleanup();
+        pm.classList.remove('show');
+        resolve(null);
+      };
+
+      function cleanup() {
+        form.removeEventListener('submit', onSubmit);
+        cancelBtn.removeEventListener('click', onCancel);
+      }
+
+      form.addEventListener('submit', onSubmit);
+      cancelBtn.addEventListener('click', onCancel);
+    });
+    if (!info) return; // user cancelled
+
+    const { name, email, phone } = info;
+
+    // persist for smoother UX
+    localStorage.setItem('ae_name', name);
+    localStorage.setItem('ae_email', email);
+    localStorage.setItem('ae_phone', phone);
+
+    // Create order on backend
+    let createResp;
+    try {
+      createResp = await fetch('/api/create-order', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, amount: 99 })
+      }).then(r => r.json());
+    } catch (err) {
+      console.error(err);
+      return alert('Could not create payment. Try again later.');
+    }
+
+    if (createResp.error) return alert(createResp.error || 'Order creation failed');
+
+    const options = {
+      key: createResp.key, // from backend
+      amount: createResp.amount,
+      currency: 'INR',
+      name: 'DSA Roadmap',
+      description: 'Escape Array Hell — Lifetime Access',
+      order_id: createResp.orderId,
+      prefill: { name, email, contact: phone },
+      notes: { product: 'dsa-roadmap-pdf' },
+      theme: { color: '#d4a843' },
+      handler: async function(response) {
+        // send to backend for verification and finalization
+        try {
+          const verifyResp = await fetch('/api/verify-payment', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(response)
+          }).then(r => r.json());
+
+          if (verifyResp.error) {
+            alert('Payment verification failed. Contact support.');
+            console.error(verifyResp);
+            return;
+          }
+
+          // show success modal and set secure download link returned by server
+          const modal = document.getElementById('successModal');
+          const downloadLink = document.getElementById('downloadLink');
+          const successEmail = document.getElementById('successEmail');
+          downloadLink.href = verifyResp.downloadUrl || ('/download?token=' + (verifyResp.token || ''));
+          successEmail.querySelector('strong').textContent = email;
+          modal.classList.add('show');
+          // wire return button
+          document.getElementById('returnHome').addEventListener('click', function() { modal.classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'}); });
+          // Also redirect to a success page if you prefer (not included to preserve UI)
+        } catch (err) {
+          console.error(err);
+          alert('Verification failed. Please contact support.');
+        }
+      },
+      modal: { ondismiss: function() { console.log('Checkout dismissed'); } }
+    };
+
+    try {
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function(resp) {
+        // show inline error in modal overlay (reuse success modal area briefly)
+        const errEl = document.getElementById('pay_error');
+        if (errEl) errEl.textContent = 'Payment failed. Please try again.';
+        console.error(resp.error);
+      });
+      rzp.open();
+    } catch (e) {
+      console.error(e);
+      const errEl = document.getElementById('pay_error');
+      if (errEl) errEl.textContent = 'Payment gateway error. Please try again later.';
+    }
+  }
+
+  // showSuccessModal kept for compatibility
+  function showSuccessModal(paymentId) {
+    const modal = document.getElementById('successModal');
+    modal.classList.add('show');
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('successModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+
+  // ─── HIDE STICKY CTA NEAR PRICING ───
+  const pricingSection = document.getElementById('pricing');
+  const stickyCta = document.querySelector('.sticky-cta');
+  window.addEventListener('scroll', function() {
+    if (!pricingSection || !stickyCta) return;
+    const rect = pricingSection.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    stickyCta.style.opacity = inView ? '0' : '1';
+    stickyCta.style.pointerEvents = inView ? 'none' : 'auto';
+    stickyCta.style.transition = 'opacity 0.3s';
+  }, { passive: true });
+</script>
+<style>
+  /* Payment info modal (keeps the site's theme variables) */
+  #paymentModal {
+    display: none;
+    position: fixed; inset: 0; z-index: 600;
+    align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+  }
+  #paymentModal.show { display:flex; }
+  #paymentModal .box {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 20px; width: 92%; max-width: 420px; color: var(--text);
+  }
+  #paymentModal h4 { font-family:'Syne',sans-serif; margin-bottom:8px; color:var(--gold); }
+  #paymentModal label { display:block; font-size:13px; color:var(--text-dim); margin-top:10px; }
+  #paymentModal input { width:100%; padding:10px 12px; margin-top:6px; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-3); color:var(--text); }
+  #pay_actions { display:flex; gap:10px; margin-top:14px; }
+  .pay-btn { flex:1; padding:10px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:700; }
+  .pay-primary { background:var(--gold); color:#0a0a0a; }
+  .pay-cancel { background:transparent; color:var(--text); border:1px solid var(--border); }
+  #pay_error { margin-top:8px; color:#ffb3b3; font-size:13px; min-height:18px; }
+</style>
+
+<!-- Payment info modal markup -->
+<div id="paymentModal" aria-hidden="true">
+  <div class="box" role="dialog" aria-modal="true">
+    <h4>Secure Checkout — ₹99</h4>
+    <form id="pay_form">
+      <label for="pay_name">Full name</label>
+      <input id="pay_name" name="name" type="text" autocomplete="name" required />
+      <label for="pay_email">Email address</label>
+      <input id="pay_email" name="email" type="email" autocomplete="email" required />
+      <label for="pay_phone">Phone number</label>
+      <input id="pay_phone" name="phone" type="tel" autocomplete="tel" required />
+      <div id="pay_error"></div>
+      <div id="pay_actions">
+        <button type="submit" class="pay-btn pay-primary">Pay ₹99</button>
+        <button type="button" id="pay_cancel" class="pay-btn pay-cancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
