@@ -1,15 +1,26 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILE = path.join(__dirname, 'data.json');
+const FILE = process.env.VERCEL 
+  ? path.join('/tmp', 'data.json')
+  : path.join(__dirname, 'data.json');
 
 function read() {
-  if (!fs.existsSync(FILE)) return { purchases: [], tokens: [] };
-  return JSON.parse(fs.readFileSync(FILE, 'utf8'));
+  try {
+    if (!fs.existsSync(FILE)) return { purchases: [], tokens: [] };
+    return JSON.parse(fs.readFileSync(FILE, 'utf8'));
+  } catch (err) {
+    console.error('Database read error:', err);
+    return { purchases: [], tokens: [] };
+  }
 }
 
 function write(data) {
-  fs.writeFileSync(FILE, JSON.stringify(data, null, 2));
+  try {
+    fs.writeFileSync(FILE, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error('Database write error:', err);
+  }
 }
 
 module.exports = {
