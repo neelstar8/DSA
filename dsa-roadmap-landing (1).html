@@ -1150,6 +1150,344 @@
       font-size: 12px;
       color: var(--text-dim);
     }
+
+    /* ─── CREDENTIALS & REFUND CSS ─── */
+    .hero-refund-badge {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      text-shadow: 0 0 8px rgba(212,168,67,0.35);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .pricing-refund-badge {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 8px rgba(212,168,67,0.35);
+    }
+
+    .credentials-container {
+      max-width: 800px;
+      margin: 40px auto 24px auto;
+      padding: 24px;
+      background: rgba(22, 22, 22, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 168, 67, 0.15);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,168,67,0.05), inset 0 1px 0 rgba(255,255,255,0.05);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .credentials-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+      text-shadow: 0 0 10px rgba(212,168,67,0.25);
+    }
+
+    .credentials-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .credentials-marquee {
+      overflow: hidden;
+      position: relative;
+      padding: 12px 0;
+      background: rgba(10, 10, 10, 0.5);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.02);
+      margin-bottom: 16px;
+    }
+
+    .credentials-marquee::before,
+    .credentials-marquee::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 60px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .credentials-marquee::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(16, 16, 16, 0.8), transparent);
+    }
+    .credentials-marquee::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(16, 16, 16, 0.8), transparent);
+    }
+
+    .credentials-marquee-inner {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: marquee 24s linear infinite;
+    }
+
+    .cred-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 28px;
+      white-space: nowrap;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      border-right: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .cred-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .cred-dot.g { background: #4285F4; color: #4285F4; }
+    .cred-dot.ms { background: #00A4EF; color: #00A4EF; }
+    .cred-dot.oa { background: #10a37f; color: #10a37f; }
+    .cred-dot.ub { background: #ffffff; color: #ffffff; }
+    .cred-dot.me { background: #0668E1; color: #0668E1; }
+    .cred-dot.am { background: #FF9900; color: #FF9900; }
+    .cred-dot.at { background: #0052CC; color: #0052CC; }
+    .cred-dot.st { background: #635bff; color: #635bff; }
+    .cred-dot.ad { background: #FF0000; color: #FF0000; }
+
+    .credentials-trust {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    #refund-policy {
+      padding: 100px 0;
+      background: var(--bg-1);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .refund-card {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 48px;
+      background: rgba(22, 22, 22, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid var(--gold);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(212,168,67,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .refund-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 0 50px rgba(212,168,67,0.22), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .refund-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(212,168,67,0.12);
+      border: 1px solid rgba(212,168,67,0.3);
+      border-radius: 50px;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold-light);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .refund-h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    .refund-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 36px;
+    }
+
+    .refund-steps {
+      text-align: left;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .refund-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      border: 1px solid rgba(212,168,67,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--gold);
+    }
+
+    .success-icon {
+      width: 14px;
+      height: 14px;
+      animation: checkmark-draw 1.2s ease forwards;
+    }
+
+    @keyframes checkmark-draw {
+      from { stroke-dashoffset: 20; stroke-dasharray: 20; }
+      to { stroke-dashoffset: 0; stroke-dasharray: 20; }
+    }
+
+    .step-text {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .step-text strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .refund-highlight {
+      padding: 20px 24px;
+      background: rgba(212,168,67,0.06);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+    .nav-refund {
+      color: var(--gold);
+      font-family: 'Syne', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(212,168,67,0.25);
+      padding: 6px 14px;
+      border-radius: 50px;
+      background: rgba(212,168,67,0.05);
+    }
+    .nav-refund:hover {
+      color: var(--gold-light);
+      text-shadow: 0 0 8px rgba(212,168,67,0.6);
+      background: rgba(212,168,67,0.12);
+      border-color: var(--gold);
+    }
+
+    .refund-card.attention-glow {
+      animation: attention-glow-seq 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    @keyframes attention-glow-seq {
+      0% {
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(212,168,67,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+        border-color: var(--gold);
+      }
+      15%, 45% {
+        box-shadow: 0 20px 60px rgba(212,168,67,0.4), 0 0 60px rgba(212,168,67,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+        border-color: var(--gold-light);
+        transform: scale(1.025);
+      }
+      100% {
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(212,168,67,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+        border-color: var(--gold);
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .refund-card {
+        padding: 36px 20px;
+        border-radius: 20px;
+      }
+      .refund-h2 {
+        font-size: 26px;
+      }
+      .refund-steps {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links {
+        gap: 10px;
+      }
+      .nav-refund {
+        font-size: 11px;
+        padding: 5px 10px;
+      }
+      .credentials-container {
+        padding: 16px 12px;
+        margin: 24px auto 16px auto;
+      }
+      .credentials-title {
+        font-size: 12px;
+      }
+      .credentials-subtitle {
+        font-size: 11px;
+      }
+      .cred-item {
+        padding: 0 16px;
+        font-size: 13px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1157,6 +1495,9 @@
 <!-- ── NAV ── -->
 <nav>
   <div class="nav-logo">DSA Roadmap</div>
+  <div class="nav-links">
+    <a href="#refund-policy" class="nav-link nav-refund" onclick="highlightRefundSection(event)">Refund Policy</a>
+  </div>
   <button class="nav-cta" onclick="openRazorpay()">Get Access — ₹99</button>
 </nav>
 
@@ -1179,10 +1520,42 @@
     <button class="btn-primary" onclick="openRazorpay()">
       ⚡ Get Instant Access &mdash; ₹99
     </button>
+    <div class="hero-refund-badge">🛡️ 100% Instant Refund Guarantee</div>
     <div class="btn-trust">
       <span class="lock-icon">🔒</span>
       Secure payment &bull; Instant delivery &bull; Lifetime access
     </div>
+  </div>
+
+  <!-- PREMIUM CREDENTIALS SECTION -->
+  <div class="credentials-container" data-reveal>
+    <div class="credentials-title">Learning & Certifications From</div>
+    <div class="credentials-subtitle">Continuous learning from some of the world's leading technology companies and platforms.</div>
+    <div class="credentials-marquee">
+      <div class="credentials-marquee-inner">
+        <!-- Set 1 -->
+        <div class="cred-item"><span class="cred-dot g"></span>Google</div>
+        <div class="cred-item"><span class="cred-dot ms"></span>Microsoft</div>
+        <div class="cred-item"><span class="cred-dot oa"></span>OpenAI</div>
+        <div class="cred-item"><span class="cred-dot ub"></span>Uber</div>
+        <div class="cred-item"><span class="cred-dot me"></span>Meta</div>
+        <div class="cred-item"><span class="cred-dot am"></span>Amazon</div>
+        <div class="cred-item"><span class="cred-dot at"></span>Atlassian</div>
+        <div class="cred-item"><span class="cred-dot st"></span>Stripe</div>
+        <div class="cred-item"><span class="cred-dot ad"></span>Adobe</div>
+        <!-- Set 2 -->
+        <div class="cred-item"><span class="cred-dot g"></span>Google</div>
+        <div class="cred-item"><span class="cred-dot ms"></span>Microsoft</div>
+        <div class="cred-item"><span class="cred-dot oa"></span>OpenAI</div>
+        <div class="cred-item"><span class="cred-dot ub"></span>Uber</div>
+        <div class="cred-item"><span class="cred-dot me"></span>Meta</div>
+        <div class="cred-item"><span class="cred-dot am"></span>Amazon</div>
+        <div class="cred-item"><span class="cred-dot at"></span>Atlassian</div>
+        <div class="cred-item"><span class="cred-dot st"></span>Stripe</div>
+        <div class="cred-item"><span class="cred-dot ad"></span>Adobe</div>
+      </div>
+    </div>
+    <div class="credentials-trust">Built using lessons, certifications and industry knowledge from leading technology platforms.</div>
   </div>
 
   <!-- VIDEO EMBED -->
@@ -1594,6 +1967,7 @@
         <span class="price-currency">₹</span>
         <span class="price-amount">99</span>
       </div>
+      <div class="pricing-refund-badge">🛡️ 100% Instant Refund Guarantee</div>
       <div class="price-label">One-time payment &bull; No subscription &bull; Instant access</div>
 
       <ul class="pricing-perks">
@@ -1610,6 +1984,59 @@
 
       <div class="pricing-security">
         🔒 Powered by Razorpay &bull; 100% Secure &bull; UPI, Cards, NetBanking accepted
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REFUND GUARANTEE ── -->
+<section id="refund-policy">
+  <div class="section-inner">
+    <div class="refund-card" data-reveal>
+      <div class="refund-badge">🛡️ ZERO RISK PURCHASE</div>
+      <h2 class="refund-h2">100% Completion<br><span class="gold">Refund Guarantee</span></h2>
+      
+      <p class="refund-desc">
+        We are so confident in the structure and value of this roadmap that we remove all risk from your decision.
+      </p>
+
+      <div class="refund-steps">
+        <div class="refund-step">
+          <div class="step-icon">
+            <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="step-text"><strong>Complete the roadmap.</strong> Follow every step in sequence.</div>
+        </div>
+        
+        <div class="refund-step">
+          <div class="step-icon">
+            <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="step-text"><strong>Finish all assigned tasks.</strong> Work through the recommended practice problems.</div>
+        </div>
+        
+        <div class="refund-step">
+          <div class="step-icon">
+            <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="step-text"><strong>Send proof of completion.</strong> Share your progress and practice sheets.</div>
+        </div>
+      </div>
+
+      <div class="refund-highlight">
+        If you genuinely feel the roadmap provided no value, request a refund review.
+      </div>
+      
+      <div class="refund-action">
+        <button class="btn-primary" onclick="openRazorpay()" style="font-size:16px;padding:16px 36px;margin-top:16px;">
+          ⚡ Start Risk-Free Today — ₹99
+        </button>
       </div>
     </div>
   </div>
@@ -1908,6 +2335,21 @@
     stickyCta.style.pointerEvents = inView ? 'none' : 'auto';
     stickyCta.style.transition = 'opacity 0.3s';
   }, { passive: true });
+
+  // ─── NAV REFUND HIGHLIGHT FLOW ───
+  function highlightRefundSection(e) {
+    e.preventDefault();
+    const refundSection = document.getElementById('refund-policy');
+    if (refundSection) {
+      refundSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const refundCard = refundSection.querySelector('.refund-card');
+      if (refundCard) {
+        refundCard.classList.remove('attention-glow');
+        void refundCard.offsetWidth; // force reflow
+        refundCard.classList.add('attention-glow');
+      }
+    }
+  }
 </script>
 <style>
   /* Payment info modal (keeps the site's theme variables) */
