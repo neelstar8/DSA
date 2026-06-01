@@ -145,3 +145,5 @@ app.post('/webhook/razorpay', (req, res) => {
 
 const PORT = process.env.PORT || 8787;
 app.listen(PORT, () => console.log('Server listening on', PORT));
+
+module.exports = app;
