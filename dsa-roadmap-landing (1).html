@@ -347,9 +347,18 @@
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.02em;
+      font-size: 16px;
+      line-height: 1.1;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
       color: var(--gold);
+      letter-spacing: 0.1em;
     }
     .nav-cta {
       background: var(--gold);
@@ -1404,9 +1413,12 @@
     }
 
     .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 20px;
+      justify-content: center;
     }
     .nav-link {
       font-size: 13px;
@@ -1419,15 +1431,17 @@
       font-family: 'Syne', sans-serif;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      border: 1px solid rgba(212,168,67,0.25);
+      border: 1px solid rgba(212,168,67,0.35);
       padding: 6px 14px;
       border-radius: 50px;
-      background: rgba(212,168,67,0.05);
+      background: rgba(212,168,67,0.06);
+      box-shadow: 0 0 10px rgba(212,168,67,0.15), inset 0 0 5px rgba(212,168,67,0.05);
+      text-shadow: 0 0 8px rgba(212,168,67,0.4);
     }
     .nav-refund:hover {
       color: var(--gold-light);
-      text-shadow: 0 0 8px rgba(212,168,67,0.6);
-      background: rgba(212,168,67,0.12);
+      box-shadow: 0 0 15px rgba(212,168,67,0.35), inset 0 0 8px rgba(212,168,67,0.1);
+      text-shadow: 0 0 12px rgba(212,168,67,0.7);
       border-color: var(--gold);
     }
 
@@ -1568,7 +1582,10 @@
         padding: 12px 12px !important;
       }
       .nav-logo {
-        font-size: 13px !important;
+        font-size: 12px !important;
+      }
+      .nav-logo span {
+        font-size: 8px !important;
       }
       .nav-links {
         gap: 6px !important;
@@ -1665,7 +1682,7 @@
 
 <!-- ── NAV ── -->
 <nav>
-  <div class="nav-logo">DSA Roadmap</div>
+  <div class="nav-logo">DSA <span>Roadmap</span></div>
   <div class="nav-links">
     <a href="#refund-policy" class="nav-link nav-refund" onclick="highlightRefundSection(event)">Refund Policy</a>
   </div>
