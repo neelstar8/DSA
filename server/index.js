@@ -13,6 +13,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const PRODUCT_PRICE = 1; // Set to 99 for production
+
 function getRazorpay() {
   const key_id = process.env.RAZORPAY_KEY_ID;
   const key_secret = process.env.RAZORPAY_KEY_SECRET;
@@ -31,7 +33,7 @@ app.get('/', (req, res) => {
 app.post('/api/create-order', async (req, res) => {
   const { name, email, phone, amount } = req.body;
   if (!name || !email || !phone) return res.status(400).json({ error: 'Missing customer info' });
-  const amt = amount || 99;
+  const amt = amount || PRODUCT_PRICE;
   const receipt = 'rcpt_' + uuidv4().replace(/-/g, '');
   try {
     const razorpay = getRazorpay();

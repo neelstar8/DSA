@@ -1452,40 +1452,211 @@
       }
     }
 
-    @media (max-width: 576px) {
+    /* ─── GLOBAL MOBILE RESPONSIVENESS MEDIA QUERIES ─── */
+    @media (max-width: 768px) {
+      /* General Sections & Spacing */
+      section {
+        padding: 60px 0 !important;
+      }
+      #hero {
+        padding: 100px 16px 40px !important;
+        min-height: auto !important;
+      }
+      .section-inner {
+        padding: 0 16px !important;
+      }
+      .section-h2 {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+      }
+      .section-desc {
+        margin-bottom: 32px !important;
+        font-size: 14px !important;
+      }
+
+      /* Refund Policy Responsiveness */
+      #refund-policy {
+        padding: 60px 0 !important;
+      }
       .refund-card {
-        padding: 36px 20px;
-        border-radius: 20px;
+        padding: 32px 20px !important;
+        margin: 0 12px !important;
+        border-radius: 16px !important;
       }
       .refund-h2 {
-        font-size: 26px;
+        font-size: 24px !important;
+        line-height: 1.2 !important;
+      }
+      .refund-desc {
+        font-size: 14px !important;
+        margin-bottom: 24px !important;
       }
       .refund-steps {
-        gap: 12px;
+        gap: 14px !important;
+        margin-bottom: 28px !important;
+      }
+      .step-text {
+        font-size: 13.5px !important;
+      }
+      .refund-highlight {
+        padding: 16px 18px !important;
+        font-size: 13.5px !important;
+      }
+
+      /* Credentials Section Responsiveness */
+      .credentials-container {
+        padding: 20px 16px !important;
+        margin: 32px 12px 20px 12px !important;
+        border-radius: 16px !important;
+      }
+      .credentials-title {
+        font-size: 12px !important;
+      }
+      .credentials-subtitle {
+        font-size: 11px !important;
+        margin-bottom: 16px !important;
+      }
+      .cred-item {
+        padding: 0 18px !important;
+        font-size: 13.5px !important;
+      }
+      .cred-dot {
+        width: 6px !important;
+        height: 6px !important;
+      }
+
+      /* Spacing between cards in grids for enhanced mobile scanability */
+      .pain-grid {
+        gap: 16px !important;
+        margin-top: 24px !important;
+      }
+      .features-grid {
+        gap: 16px !important;
+        margin-top: 32px !important;
+      }
+      .reviews-grid {
+        gap: 18px !important;
+      }
+
+      /* Pricing Section Mobile Fit */
+      .pricing-card {
+        padding: 32px 20px !important;
+        margin: 32px 12px 0 !important;
+        border-radius: 20px !important;
+      }
+      .price-old {
+        font-size: 14px !important;
+      }
+      .price-amount {
+        font-size: 64px !important;
+      }
+      .price-currency {
+        font-size: 24px !important;
+      }
+      .pricing-perks {
+        gap: 12px !important;
+        margin-top: 24px !important;
+      }
+      .pricing-perks li {
+        font-size: 13.5px !important;
       }
     }
 
     @media (max-width: 480px) {
+      /* Navbar Responsiveness to prevent wrapping or crowded controls */
+      nav {
+        padding: 12px 12px !important;
+      }
+      .nav-logo {
+        font-size: 13px !important;
+      }
       .nav-links {
-        gap: 10px;
+        gap: 6px !important;
       }
       .nav-refund {
-        font-size: 11px;
-        padding: 5px 10px;
+        font-size: 10px !important;
+        padding: 4px 8px !important;
       }
+      .nav-cta {
+        font-size: 10.5px !important;
+        padding: 8px 12px !important;
+      }
+
+      /* Credentials Section for small screens */
       .credentials-container {
-        padding: 16px 12px;
-        margin: 24px auto 16px auto;
+        padding: 16px 12px !important;
+        margin: 24px 8px 16px 8px !important;
+        border-radius: 12px !important;
       }
       .credentials-title {
-        font-size: 12px;
+        font-size: 11px !important;
       }
       .credentials-subtitle {
-        font-size: 11px;
+        font-size: 10px !important;
+        margin-bottom: 12px !important;
       }
       .cred-item {
-        padding: 0 16px;
-        font-size: 13px;
+        padding: 0 12px !important;
+        font-size: 12px !important;
+        gap: 8px !important;
+      }
+
+      /* Roadmap Step Responsiveness to ensure titles/hints never overflow */
+      .roadmap-node {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 10px !important;
+      }
+      .roadmap-step {
+        gap: 10px !important;
+      }
+      .roadmap-content {
+        padding: 12px 14px !important;
+      }
+      .roadmap-connector {
+        height: 20px !important;
+        margin-left: 19px !important;
+      }
+      .roadmap-title {
+        font-size: 14px !important;
+      }
+      .roadmap-hint {
+        font-size: 11px !important;
+      }
+
+      /* Global typography scale down to fit small viewports */
+      .hero-h1 {
+        font-size: 32px !important;
+      }
+      .hero-sub {
+        font-size: 14px !important;
+        margin-bottom: 24px !important;
+      }
+      .btn-primary {
+        padding: 14px 28px !important;
+        font-size: 14px !important;
+      }
+      .hero-refund-badge {
+        font-size: 11px !important;
+        margin-top: 8px !important;
+      }
+      .btn-trust {
+        font-size: 10px !important;
+      }
+
+      /* Success Modal Box Mobile Fit */
+      .modal-box {
+        padding: 24px 16px !important;
+      }
+      .modal-h3 {
+        font-size: 22px !important;
+      }
+      .modal-text {
+        font-size: 13.5px !important;
+      }
+      .modal-download {
+        padding: 12px 24px !important;
+        font-size: 14px !important;
       }
     }
   </style>
@@ -2165,6 +2336,67 @@
 </div>
 
   <script>
+  // ─── GLOBAL CONFIGURATION ───
+  const PRODUCT_PRICE = 1; // Set to 99 for production
+
+  function updatePricingDisplay() {
+    // 1. Update elements with class 'price-amount'
+    document.querySelectorAll('.price-amount').forEach(el => {
+      el.textContent = PRODUCT_PRICE;
+    });
+
+    // 2. Update navbar CTA
+    const navCta = document.querySelector('.nav-cta');
+    if (navCta) navCta.textContent = `Get Access — ₹${PRODUCT_PRICE}`;
+
+    // 3. Update hero button
+    const heroBtn = document.querySelector('.btn-primary');
+    if (heroBtn) heroBtn.innerHTML = `⚡ Get Instant Access &mdash; ₹${PRODUCT_PRICE}`;
+
+    // 4. Update pricing section button
+    const pricingBtn = document.querySelector('.btn-pricing');
+    if (pricingBtn) pricingBtn.textContent = `🔓 Unlock The Roadmap — ₹${PRODUCT_PRICE}`;
+
+    // 5. Update refund guarantee button
+    const refundSection = document.getElementById('refund-policy');
+    if (refundSection) {
+      const refundBtn = refundSection.querySelector('.btn-primary');
+      if (refundBtn) refundBtn.textContent = `⚡ Start Risk-Free Today — ₹${PRODUCT_PRICE}`;
+    }
+
+    // 6. Update stats pricing
+    const statDivider = document.querySelector('.reviews-stats');
+    if (statDivider) {
+      const stats = statDivider.querySelectorAll('.review-stat');
+      if (stats.length >= 3) {
+        const priceStat = stats[2].querySelector('.stat-number');
+        if (priceStat) priceStat.textContent = `₹${PRODUCT_PRICE}`;
+      }
+    }
+
+    // 7. Update final CTA button and text
+    const finalCta = document.getElementById('final-cta');
+    if (finalCta) {
+      const btn = finalCta.querySelector('.btn-primary');
+      if (btn) btn.innerHTML = `⚡ Get Access Now &mdash; ₹${PRODUCT_PRICE}`;
+      const desc = finalCta.querySelector('.section-desc');
+      if (desc) desc.textContent = `The next step in your DSA journey is one click away. One roadmap. One decision. ₹${PRODUCT_PRICE}.`;
+    }
+
+    // 8. Update sticky cta
+    const stickyCta = document.querySelector('.sticky-cta-btn');
+    if (stickyCta) stickyCta.textContent = `⚡ Get Instant Access — ₹${PRODUCT_PRICE}`;
+    
+    // 9. Update checkout modal elements
+    const modalTitle = document.querySelector('#paymentModal h4');
+    if (modalTitle) modalTitle.textContent = `Secure Checkout — ₹${PRODUCT_PRICE}`;
+    const modalBtn = document.querySelector('#paymentModal .pay-primary');
+    if (modalBtn) modalBtn.textContent = `Pay ₹${PRODUCT_PRICE}`;
+  }
+
+  // Execute pricing update immediately
+  updatePricingDisplay();
+
   // ─── REVEAL ON SCROLL ───
   const revealEls = document.querySelectorAll('[data-reveal]');
   const observer = new IntersectionObserver(
@@ -2246,7 +2478,7 @@
     try {
       createResp = await fetch('/api/create-order', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, amount: 99 })
+        body: JSON.stringify({ name, email, phone, amount: PRODUCT_PRICE })
       }).then(r => r.json());
     } catch (err) {
       console.error(err);
