@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const Razorpay = require('razorpay');
 const { v4: uuidv4 } = require('uuid');
 const db = require('./db');
-const sendEmail = require('./send_email');
+
 
 const app = express();
 app.use(cors());
@@ -85,10 +85,6 @@ app.post('/api/verify-payment', async (req, res) => {
       max_downloads: 3,
       used: 0
     });
-
-    // send email via Resend
-    const downloadUrl = `${process.env.PDF_DOWNLOAD_URL || 'http://localhost:8787/download'}?token=${token}`;
-    await sendEmail(purchase.name, purchase.email, downloadUrl);
 
     res.json({ success: true, downloadUrl: `/download?token=${token}` });
   } catch (err) {
