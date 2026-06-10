@@ -74,13 +74,23 @@ app.post('/api/verify-payment', async (req, res) => {
 
     // generate secure download token (one-time or time-limited)
     const token = uuidv4();
-    db.insertDownloadToken({ token, order_id: razorpay_order_id, email: purchase.email, created_at: new Date().toISOString(), used: 0 });
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 minutes TTL
+    db.insertDownloadToken({
+      token,
+      order_id: razorpay_order_id,
+      email: purchase.email,
+      created_at: new Date().toISOString(),
+      expires_at: expiresAt,
+      download_count: 0,
+      max_downloads: 3,
+      used: 0
+    });
 
     // send email via Resend
-    const downloadUrl = `${process.env.PDF_DOWNLOAD_URL}?token=${token}`;
+    const downloadUrl = `${process.env.PDF_DOWNLOAD_URL || 'http://localhost:8787/download'}?token=${token}`;
     await sendEmail(purchase.name, purchase.email, downloadUrl);
 
-    res.json({ success: true, downloadUrl });
+    res.json({ success: true, downloadUrl: `/download?token=${token}` });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Verification failed' });
@@ -91,34 +101,52 @@ app.post('/api/verify-payment', async (req, res) => {
 app.get('/download', (req, res) => {
   const token = req.query.token;
   if (!token) return res.status(400).send('Missing token');
+  
   const rec = db.getDownloadToken(token);
   if (!rec) return res.status(404).send('Invalid or expired token');
-  if (rec.used) return res.status(410).send('Token already used');
-
-  // optional expiry: 7 days
-  const created = new Date(rec.created_at);
+  
   const now = new Date();
-  const days = (now - created) / (1000 * 60 * 60 * 24);
-  if (days > 30) return res.status(410).send('Token expired');
 
-  // mark used
-  db.markTokenUsed(token);
+  // 1. Expiration check (15 minutes for new tokens, legacy 30 days)
+  if (rec.expires_at) {
+    const expires = new Date(rec.expires_at);
+    if (now > expires) {
+      return res.status(410).send('Link expired. Download links are valid for 15 minutes.');
+    }
+  } else {
+    const created = new Date(rec.created_at);
+    const days = (now - created) / (1000 * 60 * 60 * 24);
+    if (days > 30) return res.status(410).send('Token expired');
+  }
 
-  // If a local PDF path is configured, stream it after validation.
-  const localPdf = process.env.PDF_FILE_PATH; // optional
-  if (localPdf) {
-    const fs = require('fs');
+  // 2. Download limit check (3 downloads for new tokens, legacy 1 download if used is set)
+  const downloadCount = rec.download_count || 0;
+  const maxDownloads = rec.max_downloads || 1;
+  if (rec.used || downloadCount >= maxDownloads) {
+    return res.status(410).send('Download limit exceeded. You can download this file up to 3 times.');
+  }
+
+  // 3. Increment download count (and mark used if at limit)
+  db.incrementDownloadCount(token);
+  if (downloadCount + 1 >= maxDownloads) {
+    db.markTokenUsed(token);
+  }
+
+  // 4. Stream PDF file directly from root of the project
+  const fs = require('fs');
+  const localPdf = process.env.PDF_FILE_PATH || path.join(__dirname, '..', 'DSA_Uplift_Premium (1).pdf');
+  
+  if (fs.existsSync(localPdf)) {
     const stat = fs.statSync(localPdf);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Length', stat.size);
-    res.setHeader('Content-Disposition', `attachment; filename="dsa-roadmap.pdf"`);
+    res.setHeader('Content-Disposition', `attachment; filename="DSA_Uplift_Premium.pdf"`);
     const stream = fs.createReadStream(localPdf);
     return stream.pipe(res);
+  } else {
+    console.error('PDF file not found at:', localPdf);
+    return res.status(500).send('Download error: PDF file template missing on server.');
   }
-
-  // Fallback: redirect to configured secure PDF URL (append token)
-  const securePdf = process.env.PDF_DOWNLOAD_URL ? (process.env.PDF_DOWNLOAD_URL + '?token=' + token) : '/';
-  res.redirect(302, securePdf);
 });
 
 // Webhook endpoint to validate events from Razorpay
