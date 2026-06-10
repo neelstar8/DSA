@@ -38,7 +38,13 @@ app.post('/api/create-order', async (req, res) => {
   try {
     const razorpay = getRazorpay();
     if (!razorpay) return res.status(500).json({ error: 'Payment gateway not configured on server' });
-    const order = await razorpay.orders.create({ amount: amt * 100, currency: 'INR', receipt, payment_capture: 1 });
+    const order = await razorpay.orders.create({
+      amount: amt * 100,
+      currency: 'INR',
+      receipt,
+      payment_capture: 1,
+      notes: { name, email, phone }
+    });
     // store provisional purchase with status 'created'
     db.insertPurchase({ name, email, phone, order_id: order.id, amount: amt, status: 'created' });
     res.json({ orderId: order.id, amount: amt * 100, key: process.env.RAZORPAY_KEY_ID });
@@ -53,18 +59,60 @@ app.post('/api/verify-payment', async (req, res) => {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
   if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) return res.status(400).json({ error: 'Missing payment fields' });
 
-  const generated_signature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+  const key_secret = process.env.RAZORPAY_KEY_SECRET;
+  if (!key_secret) {
+    console.error('RAZORPAY_KEY_SECRET is missing in process.env');
+    return res.status(500).json({ error: 'Server configuration error: missing payment secret' });
+  }
+
+  const generated_signature = crypto.createHmac('sha256', key_secret)
     .update(razorpay_order_id + '|' + razorpay_payment_id)
     .digest('hex');
 
   if (generated_signature !== razorpay_signature) {
+    console.error('Signature mismatch!', {
+      orderId: razorpay_order_id,
+      paymentId: razorpay_payment_id,
+      generated: generated_signature,
+      received: razorpay_signature
+    });
     return res.status(400).json({ error: 'Invalid signature' });
   }
 
   try {
+    const razorpay = getRazorpay();
+    if (!razorpay) {
+      console.error('Razorpay client not configured');
+      return res.status(500).json({ error: 'Payment gateway not configured on server' });
+    }
+
     // Update DB
-    const purchase = db.getPurchaseByOrderId(razorpay_order_id);
-    if (!purchase) return res.status(404).json({ error: 'Order not found' });
+    let purchase = db.getPurchaseByOrderId(razorpay_order_id);
+    if (!purchase) {
+      console.log(`Order ${razorpay_order_id} not found in DB. Attempting stateless recovery from Razorpay API...`);
+      try {
+        const orderDetails = await razorpay.orders.fetch(razorpay_order_id);
+        if (orderDetails && orderDetails.notes) {
+          const { name, email, phone } = orderDetails.notes;
+          purchase = {
+            name: name || 'Customer',
+            email: email || 'support@dsaroadmap.in',
+            phone: phone || '',
+            order_id: razorpay_order_id,
+            amount: (orderDetails.amount || 0) / 100,
+            status: 'created'
+          };
+          db.insertPurchase(purchase);
+          console.log(`Stateless recovery successful for order ${razorpay_order_id}:`, purchase);
+        } else {
+          console.error(`Order details or notes missing for order ${razorpay_order_id}:`, orderDetails);
+          return res.status(404).json({ error: 'Order not found on server or gateway' });
+        }
+      } catch (recoveryErr) {
+        console.error(`Failed to fetch order details from Razorpay API:`, recoveryErr);
+        return res.status(404).json({ error: 'Order not found on server and recovery failed' });
+      }
+    }
 
     db.updatePurchaseByOrderId(razorpay_order_id, {
       payment_id: razorpay_payment_id,
@@ -88,7 +136,7 @@ app.post('/api/verify-payment', async (req, res) => {
 
     res.json({ success: true, downloadUrl: `/download?token=${token}` });
   } catch (err) {
-    console.error(err);
+    console.error('Verification handler error:', err);
     res.status(500).json({ error: 'Verification failed' });
   }
 });
