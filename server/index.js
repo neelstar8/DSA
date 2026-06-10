@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const PRODUCT_PRICE = 1; // Set to 99 for production
+const PRODUCT_PRICE = 99; // Set to 99 for production
 
 function getRazorpay() {
   const key_id = process.env.RAZORPAY_KEY_ID;
