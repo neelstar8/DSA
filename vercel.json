@@ -6,7 +6,8 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "dsa-roadmap-landing (1).html"
+          "dsa-roadmap-landing (1).html",
+          "DSA_Uplift_Premium (1).pdf"
         ]
       }
     }

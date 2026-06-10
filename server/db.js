@@ -59,5 +59,13 @@ module.exports = {
     data.tokens[idx].used = 1;
     write(data);
     return data.tokens[idx];
+  },
+  incrementDownloadCount: (token) => {
+    const data = read();
+    const idx = data.tokens.findIndex(x => x.token === token);
+    if (idx === -1) return null;
+    data.tokens[idx].download_count = (data.tokens[idx].download_count || 0) + 1;
+    write(data);
+    return data.tokens[idx];
   }
 };
